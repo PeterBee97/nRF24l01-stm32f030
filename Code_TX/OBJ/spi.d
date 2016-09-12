@@ -1,0 +1,16 @@
+..\obj\spi.o: ..\HARDWARE\spi.c
+..\obj\spi.o: ..\HARDWARE\spi.h
+..\obj\spi.o: ..\User\stm32f0xx.h
+..\obj\spi.o: ..\CORE\core_cm0.h
+..\obj\spi.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\spi.o: ..\CORE\core_cmInstr.h
+..\obj\spi.o: ..\CORE\core_cmFunc.h
+..\obj\spi.o: ..\User\system_stm32f0xx.h
+..\obj\spi.o: ..\User\stm32f0xx_conf.h
+..\obj\spi.o: ..\STM32F03x_FWLib\inc\stm32f0xx_gpio.h
+..\obj\spi.o: ..\User\stm32f0xx.h
+..\obj\spi.o: ..\STM32F03x_FWLib\inc\stm32f0xx_rcc.h
+..\obj\spi.o: ..\STM32F03x_FWLib\inc\stm32f0xx_tim.h
+..\obj\spi.o: ..\STM32F03x_FWLib\inc\stm32f0xx_usart.h
+..\obj\spi.o: ..\STM32F03x_FWLib\inc\stm32f0xx_misc.h
+..\obj\spi.o: ..\HARDWARE\../STM32F03x_FWLib/inc/stm32f0xx_spi.h
