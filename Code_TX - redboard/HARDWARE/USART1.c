@@ -7,6 +7,10 @@
 //=============================================================================
 
 #include "USART1.h"
+#include "LED.h"
+#include "delay.h"
+
+uint8_t recv_data[3]={0},p=0;
 
 //加入以下代码,支持printf函数,而不需要选择use MicroLIB	  
 #if 1
@@ -34,7 +38,18 @@ int fputc(int ch, FILE *f)
   return (ch);
 }
 #endif 
-
+void save_byte(uint16_t data)
+{
+	p=(p+1)%3;
+	recv_data[p] = data;
+	if (recv_data[p]==0x0A)
+			if (recv_data[(p+2)%3]==0x0D)
+			{
+				host_data=recv_data[(p+1)%3];
+				USART_SendData(USART1,host_data);
+				while (USART_GetFlagStatus(USART1,USART_FLAG_TXE) == RESET);
+			}
+}
 /* USART初始化 */
 void USART1_Init(void)
 {
@@ -86,8 +101,7 @@ void USART1_IRQHandler(void)
 {
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
-   USART_SendData(USART1,USART_ReceiveData(USART1));
-	 while (USART_GetFlagStatus(USART1,USART_FLAG_TXE) == RESET);
+		save_byte(USART_ReceiveData(USART1));
 	}
 			
 }

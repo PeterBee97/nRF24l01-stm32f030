@@ -14,3 +14,5 @@
 ..\obj\usart1.o: ..\STM32F03x_FWLib\inc\stm32f0xx_usart.h
 ..\obj\usart1.o: ..\STM32F03x_FWLib\inc\stm32f0xx_misc.h
 ..\obj\usart1.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\usart1.o: ..\HARDWARE\LED.h
+..\obj\usart1.o: ..\SYSTEM\delay.h

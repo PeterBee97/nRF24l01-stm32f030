@@ -5,7 +5,7 @@
 #include "PWM.h"
 #include "24l01.h"
 #include "spi.h"
-uint8_t data[8]={0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef},reg_addr,reg_data,sta,fifo_sta,buf[5];
+uint8_t data[8]={0x2b,0x23,0x45,0x67,0x89,0xab,0xcd,0xef},reg_addr,reg_data,sta,fifo_sta,buf[5];
 uint8_t player_data;
 int main(void)
 {
@@ -36,7 +36,12 @@ while(1)
 			if (NRF24L01_RxPacket(data)==0) break;	
 			LED_OFF;
 		}
-		LED_ON;
+		if (data[0]==0x2b) GPIO_ResetBits(GPIOA,GPIO_Pin_0);
+		else
+		{	
+			GPIO_SetBits(GPIOA,GPIO_Pin_0);
+			LED_ON;
+		}
 	}
 }
 

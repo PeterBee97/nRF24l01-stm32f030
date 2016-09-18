@@ -5,7 +5,7 @@
 #include "PWM.h"
 #include "24l01.h"
 #include "spi.h"
-uint8_t data[8]={0x01,0x23,0x45,0x67,0x89,0xab,0xcd,0xef},reg_addr,reg_data,sta,fifo_sta,buf[5];
+uint8_t host_data,reg_addr,reg_data,sta,fifo_sta,buf[5];
 
 int main(void)
 {
@@ -26,7 +26,7 @@ int main(void)
   while(1){
 		success=0;
 		//reg_data=NRF24L01_Read_Reg(0);sta =NRF24L01_Read_Reg(STATUS);
-		if (NRF24L01_TxPacket(data)==TX_OK) success=1;
+		if (NRF24L01_TxPacket(&host_data)==TX_OK) success=1;
 		//if (!NRF24L01_RxPacket(data)) success=1;
 		//reg_data=NRF24L01_Read_Reg(0);
 		//sta=NRF24L01_Read_Reg(STATUS);fifo_sta=NRF24L01_Read_Reg(NRF_FIFO_STATUS);

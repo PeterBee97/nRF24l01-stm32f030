@@ -7,5 +7,5 @@
 
 
 void USART1_Init(void);
-
+extern uint8_t host_data;
 #endif
