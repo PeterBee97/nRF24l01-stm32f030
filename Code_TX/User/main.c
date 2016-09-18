@@ -21,7 +21,7 @@ int main(void)
 	//NRF24L01_Write_Reg(WRITE_REG_NRF+EN_AA,0x00);
 //	reg_data=NRF24L01_Read_Reg(0);sta=NRF24L01_Read_Reg(STATUS);
 //	NRF24L01_Write_Reg(WRITE_REG_NRF+CONFIG,0x7e);
-//	delay_ms(1);
+	delay_ms(1);
 //	reg_data=NRF24L01_Read_Reg(0);sta=NRF24L01_Read_Reg(STATUS);
   while(1){
 		

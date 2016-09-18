@@ -1,0 +1,16 @@
+..\obj\pwm.o: ..\HARDWARE\PWM.c
+..\obj\pwm.o: ..\User\stm32f0xx.h
+..\obj\pwm.o: ..\CORE\core_cm0.h
+..\obj\pwm.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\pwm.o: ..\CORE\core_cmInstr.h
+..\obj\pwm.o: ..\CORE\core_cmFunc.h
+..\obj\pwm.o: ..\User\system_stm32f0xx.h
+..\obj\pwm.o: ..\User\stm32f0xx_conf.h
+..\obj\pwm.o: ..\STM32F03x_FWLib\inc\stm32f0xx_gpio.h
+..\obj\pwm.o: ..\User\stm32f0xx.h
+..\obj\pwm.o: ..\STM32F03x_FWLib\inc\stm32f0xx_rcc.h
+..\obj\pwm.o: ..\STM32F03x_FWLib\inc\stm32f0xx_tim.h
+..\obj\pwm.o: ..\STM32F03x_FWLib\inc\stm32f0xx_usart.h
+..\obj\pwm.o: ..\STM32F03x_FWLib\inc\stm32f0xx_misc.h
+..\obj\pwm.o: ..\HARDWARE\PWM.h
+..\obj\pwm.o: ..\HARDWARE\led.h

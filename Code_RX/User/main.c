@@ -33,13 +33,10 @@ int main(void)
 		//if (NRF24L01_TxPacket(data)==TX_OK) success=1;
 		while(1) 
 		{
-			NRF24L01_CE_CLR;delay_us(10);
-			NRF24L01_CE_SET;delay_us(1000);
-			reg_data=NRF24L01_Read_Reg(9);
+			//NRF24L01_CE_CLR;delay_us(10);
+			NRF24L01_CE_SET;delay_us(500);//ÐþÑ§CE
 			if (NRF24L01_RxPacket(data)==0) break;	
-			if (reg_data) GPIO_SetBits(GPIOA,GPIO_Pin_1);
-			else GPIO_ResetBits(GPIOA,GPIO_Pin_1);
-			delay_ms(10);
+			GPIO_ResetBits(GPIOA,GPIO_Pin_1);
 		}
 		//if (!NRF24L01_RxPacket(data)) success=1;
 		//reg_data=NRF24L01_Read_Reg(0);
@@ -58,7 +55,7 @@ int main(void)
 		//if (success) delay_ms(1000);
 		GPIO_SetBits(GPIOA,GPIO_Pin_1);
 		reg_data=NRF24L01_Read_Reg(9);
-		delay_ms(1000);
+		//delay_ms(1000);
 		/*for (reg_addr=0;reg_addr<0x1E;reg_addr++)
 			reg_data=NRF24L01_Read_Reg(reg_addr);*/
 	}
