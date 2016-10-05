@@ -384,17 +384,17 @@ ARM Macro Assembler    Page 6
               00000200 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0 --apcs=interw
-ork --depend=..\obj\startup_stm32f0xx.d -o..\obj\startup_stm32f0xx.o -I"C:\User
-s\bjd97\Documents\nRF24l01-stm32f030\Code_RX - redboard\User\RTE" -ID:\Keil_v5\
-ARM\PACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include -ID:\Keil_v5\ARM\CMSIS\Include
- --predefine="__UVISION_VERSION SETA 518" --predefine="STM32F030x6 SETA 1" --li
+ork --depend=..\obj\startup_stm32f0xx.d -o..\obj\startup_stm32f0xx.o -I"E:\docu
+ments\nRF24l01-stm32f030-master\Code_RX - redboard\User\RTE" -ID:\Keil_v5\ARM\P
+ACK\Keil\STM32F0xx_DFP\1.5.0\Device\Include -ID:\Keil_v5\ARM\CMSIS\Include --pr
+edefine="__UVISION_VERSION SETA 518" --predefine="STM32F030x6 SETA 1" --list=.\
 
 
 
 ARM Macro Assembler    Page 7 
 
 
-st=.\startup_stm32f0xx.lst ..\CORE\startup_stm32f0xx.s
+startup_stm32f0xx.lst ..\CORE\startup_stm32f0xx.s
 
 
 

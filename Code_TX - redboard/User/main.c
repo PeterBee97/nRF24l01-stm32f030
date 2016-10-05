@@ -5,11 +5,11 @@
 #include "PWM.h"
 #include "24l01.h"
 #include "spi.h"
-uint8_t host_data,reg_addr,reg_data,sta,fifo_sta,buf[5];
+uint8_t host_data,reg_addr,reg_data,sta,fifo_sta,buf[5],data[32];
 
 int main(void)
 {
-	uint8_t success;
+	uint8_t success,i=0;
 	delay_init();
 	LED_Init();
 	USART1_Init();
@@ -25,9 +25,15 @@ int main(void)
 //	reg_data=NRF24L01_Read_Reg(0);sta=NRF24L01_Read_Reg(STATUS);
   while(1){
 		success=0;
+		while(1)
+		{
+			NRF24L01_TX_Mode();
+			delay_ms(10);
+			i++;i%=10;
+			if (!i) LED_TURN;
 		//reg_data=NRF24L01_Read_Reg(0);sta =NRF24L01_Read_Reg(STATUS);
-		if (NRF24L01_TxPacket(&host_data)==TX_OK) success=1;
-		//if (!NRF24L01_RxPacket(data)) success=1;
+			if (NRF24L01_TxPacket(&host_data)==TX_OK) {success=1;break;}
+		}//if (!NRF24L01_RxPacket(data)) success=1;
 		//reg_data=NRF24L01_Read_Reg(0);
 		//sta=NRF24L01_Read_Reg(STATUS);fifo_sta=NRF24L01_Read_Reg(NRF_FIFO_STATUS);
 		/*if (!NRF24L01_RxPacket(data)) {
@@ -37,14 +43,17 @@ int main(void)
 		}*/
 		if (success) LED_ON;
 		else LED_OFF;
-
+		NRF24L01_RX_Mode();
 		delay_ms(10);
-		
 		//if (success) delay_ms(100);
-		if (success) LED_OFF;
-		else LED_ON;
-
-		delay_ms(190);
+		//while(1)
+			if (!NRF24L01_RxPacket(data)) 
+			{
+				LED_ON;
+				for (i=0;i<32;i++) USART_SendData(USART1,data[i]);
+			}
+		else LED_OFF;
+		delay_ms(80);
 		//for (reg_addr=0;reg_addr<0x1E;reg_addr++)
 		//	reg_data=NRF24L01_Read_Reg(reg_addr);
 	}
