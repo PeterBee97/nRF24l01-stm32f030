@@ -2,7 +2,7 @@
 ..\obj\24l01.o: ..\HARDWARE\24l01.h
 ..\obj\24l01.o: ..\User\stm32f0xx.h
 ..\obj\24l01.o: ..\CORE\core_cm0.h
-..\obj\24l01.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\24l01.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\24l01.o: ..\CORE\core_cmInstr.h
 ..\obj\24l01.o: ..\CORE\core_cmFunc.h
 ..\obj\24l01.o: ..\User\system_stm32f0xx.h

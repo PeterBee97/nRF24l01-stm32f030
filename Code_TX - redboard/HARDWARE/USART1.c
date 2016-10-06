@@ -9,9 +9,10 @@
 #include "USART1.h"
 #include "LED.h"
 #include "delay.h"
-
-uint8_t recv_data[3]={0},p=0;
-
+extern uint8_t select;
+uint8_t i=0,j;
+extern uint8_t host_data[32],player_data[2][32];
+uint8_t temp_data[18];
 //加入以下代码,支持printf函数,而不需要选择use MicroLIB	  
 #if 1
 #pragma import(__use_no_semihosting)             
@@ -38,17 +39,39 @@ int fputc(int ch, FILE *f)
   return (ch);
 }
 #endif 
+void update_player_data()
+{
+	player_data[0][0]=0xF0 | (host_data[0]&0x03);
+	player_data[1][0]=0xF4 | (host_data[0]&0x03);
+	player_data[0][1]=(host_data[1]&0x03) | (host_data[0]&0xFC);
+	player_data[1][1]=host_data[1];
+	player_data[0][2]=player_data[1][4]=host_data[2];//player1 X
+	player_data[0][3]=player_data[1][5]=host_data[3];//player1 Y
+	player_data[0][4]=player_data[1][2]=host_data[4];//player2 X
+	player_data[0][5]=player_data[1][3]=host_data[5];//player2 Y
+	player_data[0][6]=player_data[1][6]=host_data[6];//target X
+	player_data[0][7]=player_data[1][7]=host_data[7];//target Y
+	player_data[0][8]=player_data[1][8]=host_data[8];//drone X
+	player_data[0][9]=player_data[1][9]=host_data[9];//drone Y
+	player_data[0][10]=player_data[1][11]=host_data[10];//player1 HP
+	player_data[0][11]=player_data[1][10]=host_data[11];//player2 HP
+	player_data[0][12]=player_data[1][12]=host_data[12];//tool X
+	player_data[0][13]=player_data[1][13]=host_data[13];//tool Y
+	player_data[0][14]=player_data[1][14]=host_data[14];//time LSB
+	player_data[0][15]=player_data[1][15]=host_data[15];//tool Type & time MSB
+}
 void save_byte(uint16_t data)
 {
-	p=(p+1)%3;
-	recv_data[p] = data;
-	if (recv_data[p]==0x0A)
-			if (recv_data[(p+2)%3]==0x0D)
-			{
-				host_data[0]=recv_data[(p+1)%3];
-				USART_SendData(USART1,host_data[0]);
-				while (USART_GetFlagStatus(USART1,USART_FLAG_TXE) == RESET);
-			}
+	temp_data[i++]=data;
+	if (i==18) i=0; 
+	if (temp_data[i]==0x0A)
+		if (temp_data[(i+17)%18]==0x0D)
+		{
+			for (j=0;j<18;j++)
+				host_data[j]=temp_data[(i+j+1)%18];
+				update_player_data();
+			LED_OFF;
+		}
 }
 /* USART初始化 */
 void USART1_Init(void)
