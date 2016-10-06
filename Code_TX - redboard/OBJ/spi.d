@@ -2,7 +2,7 @@
 ..\obj\spi.o: ..\HARDWARE\spi.h
 ..\obj\spi.o: ..\User\stm32f0xx.h
 ..\obj\spi.o: ..\CORE\core_cm0.h
-..\obj\spi.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\spi.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\spi.o: ..\CORE\core_cmInstr.h
 ..\obj\spi.o: ..\CORE\core_cmFunc.h
 ..\obj\spi.o: ..\User\system_stm32f0xx.h

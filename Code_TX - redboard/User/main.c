@@ -11,7 +11,7 @@ volatile uint8_t select=0;
 
 int main(void)
 {
-	uint8_t i=0,j;
+	uint8_t i=0;//,j;
 	delay_init();
 	LED_Init();
 	USART1_Init();
@@ -29,14 +29,14 @@ int main(void)
 	{
 		for (select=0;select<2;select++)
 		{
-			j=0;
+			//j=0;
 			//while(1)
 			{
 				NRF24L01_TX_Mode();
 				//NRF24L01_Read_Buf(TX_ADDR,buf,5);
-				i++;i%=10;j++;
-				if (!i) LED_TURN;
-				if (j==100)break;
+				//i++;i%=10;j++;
+				//if (!i) LED_TURN;
+				//if (j==100)break;
 			//reg_data=NRF24L01_Read_Reg(0);sta =NRF24L01_Read_Reg(STATUS);
 				if (NRF24L01_TxPacket(player_data[select])==TX_OK);// break;
 			}//if (!NRF24L01_RxPacket(data)) success=1;
@@ -48,7 +48,8 @@ int main(void)
 				delay_ms(100);
 				GPIO_ResetBits(GPIOA,GPIO_Pin_1);
 			}*/
-			LED_ON;
+			i++;i%=10;if (!i) LED_TURN;
+			//LED_ON;
 			NRF24L01_RX_Mode();
 			delay_ms(10);
 			//if (success) delay_ms(100);
