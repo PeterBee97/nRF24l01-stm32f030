@@ -10,7 +10,7 @@
 #include "LED.h"
 #include "delay.h"
 
-uint8_t recv_data[3]={0},p=0;
+uint8_t recv_data[PLAYER_DATA_LENGTH]={0},p=0;
 //加入以下代码,支持printf函数,而不需要选择use MicroLIB	  
 #if 1
 #pragma import(__use_no_semihosting)             
@@ -39,12 +39,13 @@ int fputc(int ch, FILE *f)
 #endif 
 void save_byte(uint16_t data)
 {
-	p=(p+1)%3;
+	p=(p+1)%PLAYER_DATA_LENGTH;
 	recv_data[p] = data;
 	if (recv_data[p]==0x0A)
-			if (recv_data[(p+2)%3]==0x0D)
+			if (recv_data[(p+PLAYER_DATA_LENGTH-1)%PLAYER_DATA_LENGTH]==0x0D)
 			{
-				player_data=recv_data[(p+1)%3];
+				player_data[1]=recv_data[(p+PLAYER_DATA_LENGTH-2)%PLAYER_DATA_LENGTH];
+				player_data[0]=recv_data[(p+PLAYER_DATA_LENGTH-3)%PLAYER_DATA_LENGTH];
 				LED_ON;
 			}
 }

@@ -5,7 +5,7 @@
 
 const uint8_t TX_ADDRESS[2][TX_ADR_WIDTH]={{0x23,0x33,0x33,0x33,0x33},{0x66,0x66,0x66,0x66,0x66}}; //发送地址
 const uint8_t RX_ADDRESS[2][RX_ADR_WIDTH]={{0x23,0x33,0x33,0x33,0x33},{0x66,0x66,0x66,0x66,0x66}}; //接收地址
-
+extern volatile uint8_t select;
 void NRF24L01_SPI_Init(void)
 {
 	
@@ -170,7 +170,7 @@ uint8_t NRF24L01_RxPacket(uint8_t *rxbuf)
 void NRF24L01_RX_Mode(void)
 {
 		NRF24L01_CE_CLR;	  
-  	NRF24L01_Write_Buf(WRITE_REG_NRF+RX_ADDR_P0,(uint8_t*)RX_ADDRESS,RX_ADR_WIDTH);//写RX节点地址
+  	NRF24L01_Write_Buf(WRITE_REG_NRF+RX_ADDR_P0,(uint8_t*)RX_ADDRESS[select],RX_ADR_WIDTH);//写RX节点地址
 	  
   	NRF24L01_Write_Reg(WRITE_REG_NRF+EN_AA,0x01);    //使能通道0的自动应答    
   	NRF24L01_Write_Reg(WRITE_REG_NRF+EN_RXADDR,0x01);//使能通道0的接收地址  	 
@@ -188,8 +188,8 @@ void NRF24L01_RX_Mode(void)
 void NRF24L01_TX_Mode(void)
 {														 
 		NRF24L01_CE_CLR;	 
-  	NRF24L01_Write_Buf(WRITE_REG_NRF+TX_ADDR,(uint8_t*)TX_ADDRESS,TX_ADR_WIDTH);//写TX节点地址 
-  	NRF24L01_Write_Buf(WRITE_REG_NRF+RX_ADDR_P0,(uint8_t*)RX_ADDRESS,RX_ADR_WIDTH); //设置TX节点地址,主要为了使能ACK	  
+  	NRF24L01_Write_Buf(WRITE_REG_NRF+TX_ADDR,(uint8_t*)TX_ADDRESS[select],TX_ADR_WIDTH);//写TX节点地址 
+  	NRF24L01_Write_Buf(WRITE_REG_NRF+RX_ADDR_P0,(uint8_t*)RX_ADDRESS[select],RX_ADR_WIDTH); //设置TX节点地址,主要为了使能ACK	  
 
   	NRF24L01_Write_Reg(WRITE_REG_NRF+EN_AA,0x01);     //使能通道0的自动应答    
   	NRF24L01_Write_Reg(WRITE_REG_NRF+EN_RXADDR,0x01); //使能通道0的接收地址  
@@ -199,8 +199,7 @@ void NRF24L01_TX_Mode(void)
   	NRF24L01_Write_Reg(WRITE_REG_NRF+CONFIG,0x0e);    //配置基本工作模式的参数;PWR_UP,EN_CRC,16BIT_CRC,接收模式,开启所有中断
 		NRF24L01_CE_SET;//CE为高,10us后启动发送
 	  delay_us(130);
-
-}		  
+}
 
 
 

@@ -4,8 +4,8 @@
 
 #include "stm32f0xx.h"
 #include <stdio.h>
-
-extern uint8_t player_data;
+#define PLAYER_DATA_LENGTH 4
+extern uint8_t player_data[PLAYER_DATA_LENGTH];
 void USART1_Init(void);
 
 #endif

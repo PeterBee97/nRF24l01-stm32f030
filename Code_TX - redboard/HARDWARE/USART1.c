@@ -45,8 +45,8 @@ void save_byte(uint16_t data)
 	if (recv_data[p]==0x0A)
 			if (recv_data[(p+2)%3]==0x0D)
 			{
-				host_data=recv_data[(p+1)%3];
-				USART_SendData(USART1,host_data);
+				host_data[0]=recv_data[(p+1)%3];
+				USART_SendData(USART1,host_data[0]);
 				while (USART_GetFlagStatus(USART1,USART_FLAG_TXE) == RESET);
 			}
 }

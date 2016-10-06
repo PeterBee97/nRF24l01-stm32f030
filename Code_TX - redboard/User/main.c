@@ -5,11 +5,12 @@
 #include "PWM.h"
 #include "24l01.h"
 #include "spi.h"
-uint8_t host_data,reg_addr,reg_data,sta,fifo_sta,buf[5],data[32];
+uint8_t host_data[32],reg_addr,reg_data,sta,fifo_sta,buf[5],data[32];
+volatile uint8_t select=0;
 
 int main(void)
 {
-	uint8_t success,i=0;
+	uint8_t i=0;
 	delay_init();
 	LED_Init();
 	USART1_Init();
@@ -23,37 +24,40 @@ int main(void)
 //	NRF24L01_Write_Reg(WRITE_REG_NRF+CONFIG,0x7e);
 	delay_ms(100);
 //	reg_data=NRF24L01_Read_Reg(0);sta=NRF24L01_Read_Reg(STATUS);
-  while(1){
-		success=0;
-		while(1)
+  while(1)
+	{
+		for (select=0;select<2;select++)
 		{
-			NRF24L01_TX_Mode();
-			delay_ms(10);
-			i++;i%=10;
-			if (!i) LED_TURN;
-		//reg_data=NRF24L01_Read_Reg(0);sta =NRF24L01_Read_Reg(STATUS);
-			if (NRF24L01_TxPacket(&host_data)==TX_OK) {success=1;break;}
-		}//if (!NRF24L01_RxPacket(data)) success=1;
-		//reg_data=NRF24L01_Read_Reg(0);
-		//sta=NRF24L01_Read_Reg(STATUS);fifo_sta=NRF24L01_Read_Reg(NRF_FIFO_STATUS);
-		/*if (!NRF24L01_RxPacket(data)) {
-			GPIO_SetBits(GPIOA,GPIO_Pin_1);
-			delay_ms(100);
-			GPIO_ResetBits(GPIOA,GPIO_Pin_1);
-		}*/
-		if (success) LED_ON;
-		else LED_OFF;
-		NRF24L01_RX_Mode();
-		delay_ms(10);
-		//if (success) delay_ms(100);
-		//while(1)
-			if (!NRF24L01_RxPacket(data)) 
+			while(1)
 			{
-				LED_ON;
-				for (i=0;i<32;i++) USART_SendData(USART1,data[i]);
+				NRF24L01_TX_Mode();
+				NRF24L01_Read_Buf(TX_ADDR,buf,5);
+				i++;i%=10;
+				if (!i) LED_TURN;
+			//reg_data=NRF24L01_Read_Reg(0);sta =NRF24L01_Read_Reg(STATUS);
+				if (NRF24L01_TxPacket(host_data)==TX_OK) break;
+			}//if (!NRF24L01_RxPacket(data)) success=1;
+			delay_us(500);
+			//reg_data=NRF24L01_Read_Reg(0);
+			//sta=NRF24L01_Read_Reg(STATUS);fifo_sta=NRF24L01_Read_Reg(NRF_FIFO_STATUS);
+			/*if (!NRF24L01_RxPacket(data)) {
+				GPIO_SetBits(GPIOA,GPIO_Pin_1);
+				delay_ms(100);
+				GPIO_ResetBits(GPIOA,GPIO_Pin_1);
+			}*/
+			LED_ON;
+			NRF24L01_RX_Mode();
+			delay_ms(10);
+			//if (success) delay_ms(100);
+			//while(1)
+				if (!NRF24L01_RxPacket(data)) 
+				{
+					LED_ON;
+					for (i=0;i<2;i++) USART_SendData(USART1,data[i]);
+				}
+			else LED_OFF;
+			delay_ms(30);
 			}
-		else LED_OFF;
-		delay_ms(80);
 		//for (reg_addr=0;reg_addr<0x1E;reg_addr++)
 		//	reg_data=NRF24L01_Read_Reg(reg_addr);
 	}

@@ -125,12 +125,12 @@ uint8_t NRF24L01_Write_Buf(uint8_t reg, uint8_t *pBuf, uint8_t len)
 //启动NRF24L01发送一次数据
 //txbuf:待发送数据首地址
 //返回值:发送完成状况
-uint8_t NRF24L01_TxPacket(uint8_t *txbuf,uint8_t len)
+uint8_t NRF24L01_TxPacket(uint8_t *txbuf)
 {
 	uint8_t sta;
  	SPI1_SetSpeed(SPI_BaudRatePrescaler_8);//spi速度为9Mhz（24L01的最大SPI时钟为10Mhz）   
 	NRF24L01_CE_CLR;
-  NRF24L01_Write_Buf(WR_TX_PLOAD,txbuf,len);//写数据到TX BUF  32个字节
+  NRF24L01_Write_Buf(WR_TX_PLOAD,txbuf,TX_PLOAD_WIDTH);//写数据到TX BUF  32个字节
  	NRF24L01_CE_SET;//启动发送	
 	delay_us(10);//10us后
 	while((NRF24L01_Read_Reg(STATUS)&0x70)==0);//等待发送完成
@@ -150,7 +150,7 @@ uint8_t NRF24L01_TxPacket(uint8_t *txbuf,uint8_t len)
 //启动NRF24L01发送一次数据
 //txbuf:待发送数据首地址
 //返回值:0，接收完成；其他，错误代码
-uint8_t NRF24L01_RxPacket(uint8_t *rxbuf,uint8_t len)
+uint8_t NRF24L01_RxPacket(uint8_t *rxbuf)
 {
 	uint8_t sta;		    							   
 	SPI1_SetSpeed(SPI_BaudRatePrescaler_8); //spi速度为9Mhz（24L01的最大SPI时钟为10Mhz）   
@@ -158,7 +158,7 @@ uint8_t NRF24L01_RxPacket(uint8_t *rxbuf,uint8_t len)
 	NRF24L01_Write_Reg(WRITE_REG_NRF+STATUS,sta); //清除TX_DS或MAX_RT中断标志
 	if(sta&RX_OK)//接收到数据
 	{
-		NRF24L01_Read_Buf(RD_RX_PLOAD,rxbuf,len);//读取数据
+		NRF24L01_Read_Buf(RD_RX_PLOAD,rxbuf,RX_PLOAD_WIDTH);//读取数据
 		NRF24L01_Write_Reg(FLUSH_RX,0xff);//清除RX FIFO寄存器 
 		return 0; 
 	}	   
@@ -199,6 +199,6 @@ void NRF24L01_TX_Mode(void)
   	NRF24L01_Write_Reg(WRITE_REG_NRF+CONFIG,0x0e);    //配置基本工作模式的参数;PWR_UP,EN_CRC,16BIT_CRC,接收模式,开启所有中断
 		NRF24L01_CE_SET;//CE为高,10us后启动发送
 	  delay_us(130);
+}
 
-}		  
 

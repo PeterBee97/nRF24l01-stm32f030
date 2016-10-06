@@ -93,8 +93,8 @@ uint8_t NRF24L01_Read_Buf(uint8_t reg, uint8_t *pBuf, uint8_t uint8_ts);//读数据
 uint8_t NRF24L01_Read_Reg(uint8_t reg);			//读寄存器
 uint8_t NRF24L01_Write_Reg(uint8_t reg, uint8_t value);//写寄存器
 uint8_t NRF24L01_Check(void);//检查24L01是否存在
-uint8_t NRF24L01_TxPacket(uint8_t *txbuf,uint8_t len);//发送一个包的数据
-uint8_t NRF24L01_RxPacket(uint8_t *rxbuf,uint8_t len);//接收一个包的数据
+uint8_t NRF24L01_TxPacket(uint8_t *txbuf);//发送一个包的数据
+uint8_t NRF24L01_RxPacket(uint8_t *rxbuf);//接收一个包的数据
 #endif
 
 
